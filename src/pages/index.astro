@@ -1,0 +1,137 @@
+---
+import Chat from '../components/Chat.jsx';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+	title="Thone AI | Next-gen apps." 
+	metatitle="Thone AI builds." 
+	metadesc="Build Thone AI webs."
+>
+  <header class="hero">
+      <div class="hero__container">
+        <div class="hero-title-container">
+        <h1 class="hero-text">Powerful models, for all.
+          <span class="hero-text__overlay" aria-hidden="true"></span>
+        </h1>
+        <p class="semi-transparent-text" aria-hidden="true" data-attribute="overlay"></p>
+      </div>
+    </div>
+      <div class="canvas-container">
+        <canvas id="canv" width="32" height="32"></canvas>
+    </div>
+  </header>
+
+  <Chat client:only />
+</Layout>
+
+<style>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+  }
+
+  h1 {
+    line-height: 1.1;
+    font-size: 5rem;
+    max-width: 13ch;
+    margin: 15px 15px;
+  }
+
+  .canvas-container {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    height: 58vh;
+    clip-path: polygon(0 0, 100% 0, 100% 37%, 0% 100%);
+  }
+
+  .semi-transparent-text {
+    opacity: 0.5;
+  }
+
+  .hero-text {
+    position: relative;
+    color: #222;
+    mix-blend-mode: luminosity;
+  }
+
+  .hero-text__overlay {
+    position: absolute;
+    left: 0;
+    top: 0px;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .hero {
+    position: relative;
+    isolation: isolate;
+    padding: 1em;
+  }
+
+  .container {
+    --max-width: 50rem;
+    width: min(100% - 2rem, var(--max-width));
+    margin-inline: auto;
+  }
+
+  .hero-title-container {
+    position: relative;
+  }
+
+canvas {
+  width: 100%;
+  height: 100%;
+}
+</style>
+
+<script>
+  const heroTitle = document.querySelector('.hero-text');
+  const heroTitleOverlay = document.querySelector('.hero-text__overlay');
+
+  var c = document.getElementById('canv');
+  var $ = c.getContext('2d');
+
+
+var col = function(x, y, r, g, b) {
+  $.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+  $.fillRect(x, y, 1,1);
+}
+var R = function(x, y, t) {
+  return( Math.floor(192 + 64*Math.cos( (x*x-y*y)/300 + t )) );
+}
+
+var G = function(x, y, t) {
+  return( Math.floor(192 + 64*Math.sin( (x*x*Math.cos(t/4)+y*y*Math.sin(t/3))/300 ) ) );
+}
+
+var B = function(x, y, t) {
+  return( Math.floor(192 + 64*Math.sin( 5*Math.sin(t/9) + ((x-100)*(x-100)+(y-100)*(y-100))/1100) ));
+}
+
+var t = 0;
+var x;
+var y;
+
+var run = function() {
+  for(x=0;x<=35;x++) {
+    for(y=0;y<=35;y++) {
+      col(x, y, R(x,y,t), G(x,y,t), B(x,y,t));
+    }
+  }
+  t = t + 0.05;
+  window.requestAnimationFrame(run);
+}
+
+run();
+</script>

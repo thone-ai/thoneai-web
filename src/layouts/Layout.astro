@@ -1,0 +1,139 @@
+---
+export interface Props {
+	title: string;
+  metatitle: string;
+  metadesc: string;
+}
+
+const { title, metatitle, metadesc } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./style.css">
+  <meta name="title" content={metatitle ?? 'Thone AI.'}>
+  <meta name="description" content={metadesc ?? 'Thone AI web.'}>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <title>{title}</title>
+</head>
+<body>
+		<slot />
+</body>
+</html>
+
+<style is:global>
+.chat-container {
+  max-width: 600px;
+  margin: 4.2em auto;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 2px 2px rgba(0.2, 0.2, 0.2, 0.2);
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.sent {
+  justify-content: flex-end;
+}
+
+.received {
+  justify-content: flex-start;
+}
+
+.content {
+  margin-right: 10px;
+  margin-left: 10px;
+  background-color: #f9f5f5;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 80%;
+  word-wrap: break-word;
+  box-shadow: 1px 1px 1px 1px rgba(0.2, 0.2, 0.2, 0.2);
+}
+
+.metadata {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #888;
+}
+
+.input-container {
+  margin-top: 10px;
+}
+
+input[type="text"] {
+  box-shadow: 0px 0px 20px 3px rgba(0.2, 0.2, 0.2, 0.2);
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  font-size: 14px;
+}
+
+@media screen and (max-width: 620px) {
+  .chat-container {
+    padding: 0;
+    width: 100%;
+    max-width: 25em;
+  }
+
+  .chat-list {
+    max-width: 100%;
+  }
+
+  .content {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .chat-container {
+    padding: 0;
+    width: 100%;
+    max-width: 20em;
+  }
+
+  .chat-list {
+    max-width: 100%;
+  }
+
+  .content {
+    max-width: 100%;
+  }
+}
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #3498db;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+</style>
