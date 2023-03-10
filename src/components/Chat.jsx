@@ -23,6 +23,8 @@ const item = {
 
 const Chat = () => {
   const [defaultChat, setDefaultChat] = useState(true);
+  const [chatData, setChatData] = useState('');
+
   const randomPH = () => {
     const inputs = ["Tell me what Python is", "Tell me the square root of 25", "Tell me what Codesandbox is", "Tell me the date on which Albert Einstein was born", "Tell me the date Steve Jobs was born"];
     const randomfn = inputs[Math.floor(Math.random() * inputs.length)];
@@ -33,10 +35,12 @@ const Chat = () => {
   async function handleChat(e) {
     e.preventDefault();
     const data = await 
-      fetch('https://jsonplaceholder.typicode.com/todos')
+      fetch('https://api.thoneai.com/v1/chat', {
+        method: 'POST'
+      })
       .then((response) => { 
         return response.json().then((data) => {
-            console.log(data);
+            setChatData(data.response);
             return data;
         }).catch((err) => {
             console.log(err);
@@ -85,9 +89,16 @@ const Chat = () => {
           <p className="content">What do you want? I'm at your dispose!</p>
         </motion.li>
       )}
+      {chatData !== '' && (
+        <motion.li className="message received"
+        variants={item}
+        >
+          <p className="content">{chatData}</p>
+        </motion.li>
+      )}
     </ul>
     {defaultChat && (
-      <button onClick={() => setDefaultChat(false)} className="sticky-button">Delete chat</button>
+      <button onClick={() => {setDefaultChat(false); setChatData('')}} className="sticky-button">Delete chat</button>
     )}
     <form onSubmit={handleChat}>
       <div className="input-container">
