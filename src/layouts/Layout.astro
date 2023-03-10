@@ -12,14 +12,9 @@ const { title, metatitle, metadesc } = Astro.props;
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="./style.css">
-  <meta name="title" content={metatitle ?? 'Thone AI.'}>
-  <meta name="description" content={metadesc ?? 'Thone AI web.'}>
+  <meta name="title" content={metatitle}>
+  <meta name="description" content={metadesc}>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
   <title>{title}</title>
 </head>
 <body>
@@ -86,6 +81,28 @@ input[type="text"] {
   font-size: 14px;
 }
 
+.floating-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  width: 150px;
+  height: 70px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.floating-button:hover {
+  background-color: #128c7e;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 620px) {
   .chat-container {
     padding: 0;
@@ -100,6 +117,136 @@ input[type="text"] {
   .content {
     max-width: 100%;
   }
+}
+
+.sticky-button {
+  position: sticky;
+  bottom: 10px;
+  right: 10px;
+  background-color: #25d366;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+  width: 120px;
+  height: 40px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.chat-container::before {
+  content: "";
+  display: block;
+  height: 50px;
+}
+
+.chat-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.sent {
+  justify-content: flex-end;
+}
+
+.received {
+  justify-content: flex-start;
+}
+
+.content {
+  background-color: #dcf8c6;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.metadata {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #888;
+}
+
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+  width: 120px;
+  height: 40px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.input-container {
+  margin-top: 10px;
+}
+
+input[type="text"] {
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.sticky-button {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  position: sticky;
+  bottom: 10px;
+  right: 10px;
+  background-color: #5783db;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  width: 101px;
+  height: 40px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.sticky-button:hover {
+  background-color: #4566a8;
+}
+
+.chat-container::before {
+  content: "";
+  display: block;
+  height: 50px;
 }
 
 @media screen and (max-width: 400px) {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from "framer-motion";
 
 const container = {
@@ -22,11 +22,26 @@ const item = {
 };
 
 const Chat = () => {
+  const [defaultChat, setDefaultChat] = useState(true);
   const randomPH = () => {
     const inputs = ["Tell me what Python is", "Tell me the square root of 25", "Tell me what Codesandbox is", "Tell me the date on which Albert Einstein was born", "Tell me the date Steve Jobs was born"];
     const randomfn = inputs[Math.floor(Math.random() * inputs.length)];
 
     return randomfn;
+  }
+
+  async function handleChat(e) {
+    e.preventDefault();
+    const data = await 
+      fetch('https://jsonplaceholder.typicode.com/todos')
+      .then((response) => { 
+        return response.json().then((data) => {
+            console.log(data);
+            return data;
+        }).catch((err) => {
+            console.log(err);
+        }) 
+    });
   }
 
   return (
@@ -37,33 +52,48 @@ const Chat = () => {
       animate="visible"
     >
     <ul className="chat-list">
-      <motion.li 
-        className="message sent"
+      {defaultChat ? (
+        <>
+          <motion.li 
+            className="message sent"
+            variants={item}
+          >
+            <p className="content">Hi!</p>
+          </motion.li>
+          <motion.li 
+            className="message received"
+            variants={item}
+          >
+            <p className="content">Hi! I'm Thone AI. What do you want?</p>
+          </motion.li>
+          <motion.li 
+            className="message sent"
+            variants={item}
+          >
+            <p className="content">Correct this text: Hi, I are Disam, how you are?</p>
+          </motion.li>
+          <motion.li className="message received"
+            variants={item}
+          >
+            <p className="content">Text corrected: Hi, I'm Disam, how are you?</p>
+          </motion.li>
+        </>
+      ) : (
+        <motion.li className="message received"
         variants={item}
-      >
-        <p className="content">Hi!</p>
-      </motion.li>
-      <motion.li 
-        className="message received"
-        variants={item}
-      >
-        <p className="content">Hi! I'm Thone AI. What do you want?</p>
-      </motion.li>
-      <motion.li 
-        className="message sent"
-        variants={item}
-      >
-        <p className="content">Correct this text: Hi, I are Disam, how you are?</p>
-      </motion.li>
-      <motion.li className="message received"
-        variants={item}
-      >
-        <p className="content">Text corrected: Hi, I'm Disam, how are you?</p>
-      </motion.li>
+        >
+          <p className="content">What do you want? I'm at your dispose!</p>
+        </motion.li>
+      )}
     </ul>
-    <div className="input-container">
-      <input type="text" placeholder={randomPH()} />
-    </div>
+    {defaultChat && (
+      <button onClick={() => setDefaultChat(false)} className="sticky-button">Delete chat</button>
+    )}
+    <form onSubmit={handleChat}>
+      <div className="input-container">
+        <input type="text" placeholder={randomPH()} />
+      </div>
+    </form>
   </motion.div>  
   )
 }
